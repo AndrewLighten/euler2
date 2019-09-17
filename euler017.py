@@ -1,3 +1,4 @@
+import inspect
 import os
 
 from termcolor import colored
@@ -47,6 +48,19 @@ def strip(s) -> str:
 
 
 def calculate():
+    """
+    If the numbers 1 to 5 are written out in words: one, two, three,
+    four, five, then there are 3 + 3 + 5 + 4 + 4 = 19 letters used in
+    total.
+
+    If all the numbers from 1 to 1000 (one thousand) inclusive were
+    written out in words, how many letters would be used?
+
+    NOTE: Do not count spaces or hyphens. For example, 342 (three
+    hundred and forty-two) contains 23 letters and 115 (one hundred and
+    fifteen) contains 20 letters. The use of "and" when writing out
+    numbers is in compliance with British usage.
+    """
     accumulator = 0
     for i in range(1, 1001):
         accumulator += len(strip(words(i)))
@@ -54,7 +68,12 @@ def calculate():
 
 
 if __name__ == '__main__':
+    program = os.path.splitext(os.path.basename(__file__))[0]
     start = timer()
-    print(f'- Result for {colored(os.path.splitext(os.path.basename(__file__))[0], "red")} = {colored(calculate(), "blue")}')
+    print(colored('-' * 70, 'red'))
+    print(colored(program, "red"))
+    print(colored(inspect.getdoc(calculate), 'yellow'))
+    print(f'> {colored(calculate(), "green", attrs=["dark"])}')
     delta = round(timer() - start, 4)
-    print(f'- Took {colored(delta, "magenta")} sec')
+    print(f'(Finished in {colored(delta, "magenta")} seconds)')
+    print(colored('-' * 70, 'red'))

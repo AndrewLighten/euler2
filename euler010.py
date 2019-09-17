@@ -1,25 +1,27 @@
+import inspect
 import os
 from termcolor import colored
-from euler003 import is_prime
+from functions import get_prime_numbers_up_to
+from timeit import default_timer as timer
 
 PRIME_LIMIT = 2000000
 
 
-def get_prime_numbers(limit):
-    number_list = list(range(2, PRIME_LIMIT))
-    for i in range(0, len(number_list)):
-        if number_list[i] == 0:
-            continue
-        for j in range(number_list[i] * 2, PRIME_LIMIT, number_list[i]):
-            number_list[j - 2] = 0
-    prime_list = [x for x in number_list if x != 0]
-    return prime_list
-
-
 def calculate():
-    prime_list = get_prime_numbers(PRIME_LIMIT)
-    return sum(prime_list)
+    """
+    The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17. Find the sum
+    of all the primes below two million.
+    """
+    return sum(get_prime_numbers_up_to(PRIME_LIMIT))
 
 
 if __name__ == '__main__':
-    print(f'Result for {colored(os.path.splitext(os.path.basename(__file__))[0], "red")} = {colored(calculate(), "blue")}')
+    program = os.path.splitext(os.path.basename(__file__))[0]
+    start = timer()
+    print(colored('-' * 70, 'red'))
+    print(colored(program, "red"))
+    print(colored(inspect.getdoc(calculate), 'yellow'))
+    print(f'> {colored(calculate(), "green", attrs=["dark"])}')
+    delta = round(timer() - start, 4)
+    print(f'(Finished in {colored(delta, "magenta")} seconds)')
+    print(colored('-' * 70, 'red'))

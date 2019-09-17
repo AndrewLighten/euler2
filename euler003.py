@@ -1,25 +1,12 @@
+import inspect
 import os
+
 from termcolor import colored
+from timeit import default_timer as timer
+from functions import get_n_prime_numbers
 
 TARGET = 600851475143
 PRIME_COUNT = 1000
-
-
-def is_prime(test, prime_list):
-    return not any(test % x == 0 for x in prime_list)
-
-
-def get_prime_numbers(count):
-    prime_list = [2]
-    while len(prime_list) < count:
-        current = prime_list[-1] + 1
-        while True:
-            if is_prime(current, prime_list):
-                prime_list.append(current)
-                break
-            else:
-                current += 1
-    return prime_list
 
 
 def find_next_prime_factor(accumulator, prime_list):
@@ -31,7 +18,11 @@ def find_next_prime_factor(accumulator, prime_list):
 
 
 def calculate():
-    prime_list = get_prime_numbers(PRIME_COUNT)
+    """
+    The prime factors of 13195 are 5, 7, 13 and 29. What is the largest
+    prime factor of the number 600851475143?
+    """
+    prime_list = get_n_prime_numbers(PRIME_COUNT)
     factor_list = []
     accumulator = TARGET
     while accumulator > 1:
@@ -42,4 +33,12 @@ def calculate():
 
 
 if __name__ == '__main__':
-    print(f'Result for {colored(os.path.splitext(os.path.basename(__file__))[0], "red")} = {colored(calculate(), "blue")}')
+    program = os.path.splitext(os.path.basename(__file__))[0]
+    start = timer()
+    print(colored('-' * 70, 'red'))
+    print(colored(program, "red"))
+    print(colored(inspect.getdoc(calculate), 'yellow'))
+    print(f'> {colored(calculate(), "green", attrs=["dark"])}')
+    delta = round(timer() - start, 4)
+    print(f'(Finished in {colored(delta, "magenta")} seconds)')
+    print(colored('-' * 70, 'red'))
