@@ -50,19 +50,19 @@ def calculate():
     solved by brute force, and requires a clever method! ;o)
     """
     rows = []
-    with open('18-data') as fd:
+    with open("18-data") as fd:
         for line in fd:
-            rows.append([int(i) for i in line.rstrip('\n').split(" ")])
+            rows.append([int(i) for i in line.rstrip("\n").split(" ")])
     return collapse(rows, len(rows) - 2)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     program = os.path.splitext(os.path.basename(__file__))[0]
     start = timer()
-    print(colored('-' * 70, 'red'))
+    print(colored("-" * 70, "red"))
     print(colored(program, "red"))
-    print(colored(inspect.getdoc(calculate), 'yellow'))
+    print(colored(inspect.getdoc(calculate), "yellow"))
     print(f'> {colored(calculate(), "green", attrs=["dark"])}')
     delta = round(timer() - start, 4)
     print(f'(Finished in {colored(delta, "magenta")} seconds)')
-    print(colored('-' * 70, 'red'))
+    print(colored("-" * 70, "red"))

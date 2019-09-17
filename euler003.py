@@ -32,13 +32,13 @@ def calculate():
     return max(factor_list)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     program = os.path.splitext(os.path.basename(__file__))[0]
     start = timer()
-    print(colored('-' * 70, 'red'))
+    print(colored("-" * 70, "red"))
     print(colored(program, "red"))
-    print(colored(inspect.getdoc(calculate), 'yellow'))
+    print(colored(inspect.getdoc(calculate), "yellow"))
     print(f'> {colored(calculate(), "green", attrs=["dark"])}')
     delta = round(timer() - start, 4)
     print(f'(Finished in {colored(delta, "magenta")} seconds)')
-    print(colored('-' * 70, 'red'))
+    print(colored("-" * 70, "red"))

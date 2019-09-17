@@ -4,10 +4,39 @@ import os
 from termcolor import colored
 from timeit import default_timer as timer
 
-WORD_LIST = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
-             'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen']
+WORD_LIST = [
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+    "ten",
+    "eleven",
+    "twelve",
+    "thirteen",
+    "fourteen",
+    "fifteen",
+    "sixteen",
+    "seventeen",
+    "eighteen",
+    "nineteen",
+]
 
-TENS_LIST = ['ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety']
+TENS_LIST = [
+    "ten",
+    "twenty",
+    "thirty",
+    "forty",
+    "fifty",
+    "sixty",
+    "seventy",
+    "eighty",
+    "ninety",
+]
 
 
 def words(n):
@@ -19,32 +48,32 @@ def words(n):
     n -= tens * 10
     units = n
 
-    msg = ''
+    msg = ""
     if thousands:
-        msg += WORD_LIST[thousands - 1] + ' thousand'
+        msg += WORD_LIST[thousands - 1] + " thousand"
     if hundreds:
-        msg += WORD_LIST[hundreds - 1] + ' hundred'
+        msg += WORD_LIST[hundreds - 1] + " hundred"
     if tens == 1:
         if msg:
-            msg += ' and '
+            msg += " and "
         msg += WORD_LIST[(tens * 10 + units) - 1]
     elif tens:
         if msg:
-            msg += ' and '
+            msg += " and "
         msg += TENS_LIST[tens - 1]
         if units:
             if msg:
-                msg += '-'
+                msg += "-"
             msg += WORD_LIST[units - 1]
     elif units:
         if msg:
-            msg += ' and '
+            msg += " and "
         msg += WORD_LIST[units - 1]
     return msg
 
 
 def strip(s) -> str:
-    return s.replace(' ', '').replace('-', '')
+    return s.replace(" ", "").replace("-", "")
 
 
 def calculate():
@@ -67,13 +96,13 @@ def calculate():
     return accumulator
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     program = os.path.splitext(os.path.basename(__file__))[0]
     start = timer()
-    print(colored('-' * 70, 'red'))
+    print(colored("-" * 70, "red"))
     print(colored(program, "red"))
-    print(colored(inspect.getdoc(calculate), 'yellow'))
+    print(colored(inspect.getdoc(calculate), "yellow"))
     print(f'> {colored(calculate(), "green", attrs=["dark"])}')
     delta = round(timer() - start, 4)
     print(f'(Finished in {colored(delta, "magenta")} seconds)')
-    print(colored('-' * 70, 'red'))
+    print(colored("-" * 70, "red"))
