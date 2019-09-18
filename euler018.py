@@ -50,7 +50,7 @@ def calculate():
     solved by brute force, and requires a clever method! ;o)
     """
     rows = []
-    with open("18-data") as fd:
+    with open("p018_triangle.txt") as fd:
         for line in fd:
             rows.append([int(i) for i in line.rstrip("\n").split(" ")])
     return collapse(rows, len(rows) - 2)

@@ -1,22 +1,22 @@
 import inspect
-import math
 import os
+from timeit import default_timer as timer
 
 from termcolor import colored
-from timeit import default_timer as timer
-from functions import sum_digits
 
 
 def calculate():
     """
-    n! means n × (n − 1) × ... × 3 × 2 × 1
+    The series, 1^1 + 2^2 + 3^3 + ... + 10^10 = 10405071317. Find the
+    last ten digits of the series:
 
-    For example, 10! = 10 × 9 × ... × 3 × 2 × 1 = 3628800, and the sum
-    of the digits in the number 10! is 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.
-
-    Find the sum of the digits in the number 100!
+        1^1 + 2^2 + 3^3 + ... + 1000^1000.
     """
-    return sum_digits(math.factorial(100))
+
+    accumulator = 0
+    for i in range(1, 1001):
+        accumulator += i ** i
+    return str(accumulator)[-10:]
 
 
 if __name__ == "__main__":
