@@ -1,12 +1,16 @@
-import math
 import doctest
-
-from typing import List, Set
+import math
+from typing import List
 
 
 def sum_digits(n: int) -> int:
     """
     Sum the digits in a value.
+
+    >>> sum_digits(123)
+    6
+    >>> sum_digits(159)
+    15
 
     :param n: The number whose digits we need to sum.
 
@@ -18,6 +22,13 @@ def sum_digits(n: int) -> int:
 def factorise(n: int) -> List[int]:
     """
     Determine the factors of a number.
+
+    >>> factorise(16)
+    [1, 2, 8, 16]
+    >>> factorise(127)
+    [1, 127]
+    >>> factorise(128)
+    [1, 2, 4, 8, 16, 32, 64, 128]
 
     :param n: The number whose factors we want.
 
@@ -31,35 +42,77 @@ def factorise(n: int) -> List[int]:
     return sorted(factors)
 
 
-def prime_factorise(n: int, prime_list: List[int] = None, prime_set: Set[int] = None) -> List[int]:
+def proper_divisors(n: int) -> List[int]:
+    """
+    Determine the proper divisors of a number (numbers less than n
+    which divide evenly into n).
+
+    >>> proper_divisors(16)
+    [1, 2, 4, 8]
+    >>> proper_divisors(25)
+    [1, 5]
+    >>> proper_divisors(127)
+    [1]
+    >>> proper_divisors(128)
+    [1, 2, 4, 8, 16, 32, 64]
+
+    :param n: The number whose proper divisors we want.
+
+    :return: The list of proper divisors.
+    """
+    factors = []
+    x = math.ceil(math.sqrt(n))
+    for i in range(1, x):
+        if n % i == 0:
+            factors.append(i)
+            if i > 1:
+                factors.append(int(n / i))
+    if x ** 2 == n:
+        factors.append(x)
+    return sorted(factors)
+
+
+def prime_factorise(n: int) -> List[int]:
     """
     Determine the prime factors of a number.
 
+    >>> prime_factorise(14)
+    [2, 7]
+    >>> prime_factorise(644)
+    [2, 2, 7, 23]
+    >>> prime_factorise(646)
+    [2, 17, 19]
+
     :param n: The number whose prime factors we want.
-    :param prime_list: The prime number list.
-    :param prime_set: The prime number list as a set (for fast find).
 
     :return: The list of prime factors.
     """
-    if prime_set is None or prime_list is None:
-        prime_list = get_prime_numbers_up_to(n + 1)
-        prime_set = set(prime_list)
-    prime_factors = []
-    while n not in prime_set:
-        for i in prime_list:
-            if i > n:
-                break
-            if n % i == 0:
-                prime_factors.append(i)
-                n = int(n / i)
-                break
-    prime_factors.append(n)
-    return prime_factors
+    i = 2
+    factors = []
+    while i * i <= n:
+        if n % i:
+            i += 1
+        else:
+            n //= i
+            factors.append(i)
+    if n > 1:
+        factors.append(n)
+    return factors
 
 
 def get_prime_numbers_up_to(limit: int) -> List[int]:
     """
-    Get a collection of prime numbers up to a particular number.
+    Get a collection of prime numbers up to a particular number. This
+    is implemented using the Sieve of Eratosthenes. See
+
+        https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
+
+    for an explanation.
+
+    >>> get_prime_numbers_up_to(10)
+    [2, 3, 5, 7]
+    >>> get_prime_numbers_up_to(20)
+    [2, 3, 5, 7, 11, 13, 17, 19]
 
     :param limit: The highest value we want the prime number for.
 
@@ -78,6 +131,11 @@ def get_prime_numbers_up_to(limit: int) -> List[int]:
 def get_n_prime_numbers(count: int) -> List[int]:
     """
     Get a collection of prime numbers.
+
+    >>> get_n_prime_numbers(4)
+    [2, 3, 5, 7]
+    >>> get_n_prime_numbers(10)
+    [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
 
     :param count: The number of prime numbers wanted.
 
@@ -125,6 +183,15 @@ def is_prime(n: int, prime_list: List[int]) -> bool:
 def is_palindrome(x: any) -> bool:
     """
     Check whether a particular value is palindromic.
+
+    >>> is_palindrome('x')
+    True
+    >>> is_palindrome('12321')
+    True
+    >>> is_palindrome('123')
+    False
+    >>> is_palindrome('')
+    True
 
     :param x: The value to check.
 

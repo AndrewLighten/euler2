@@ -1,12 +1,13 @@
 import inspect
 import os
+
 from timeit import default_timer as timer
-
 from termcolor import colored
-
-from functions import prime_factorise, get_prime_numbers_up_to
+from functions import prime_factorise
 
 MAX_COUNT = 500000
+FACTOR_COUNT = 4
+SEQUENCE_COUNT = 4
 
 
 def calculate():
@@ -27,25 +28,18 @@ def calculate():
     Find the first four consecutive integers to have four distinct
     prime factors each. What is the first of these numbers?
     """
-
     i = 2
-    prime_list = get_prime_numbers_up_to(MAX_COUNT)
-    prime_set = set(prime_list)
     consecutive_list = []
-
     while i < MAX_COUNT:
-        prime_factors = prime_factorise(i, prime_list, prime_set)
+        prime_factors = prime_factorise(i)
         distinct_prime_factors = sorted(list(set(prime_factors)))
-        if len(distinct_prime_factors) == 4:
+        if len(distinct_prime_factors) == FACTOR_COUNT:
             consecutive_list.append((i, distinct_prime_factors))
-            if len(consecutive_list) == 4:
-                print(consecutive_list)
-                return i - 4
+            if len(consecutive_list) == SEQUENCE_COUNT:
+                return i - (SEQUENCE_COUNT - 1)
         else:
             consecutive_list = []
         i += 1
-
-    return 0
 
 
 if __name__ == "__main__":
